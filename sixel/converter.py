@@ -19,6 +19,8 @@
 # ***** END LICENSE BLOCK *****
 
 import sys
+from io import StringIO
+
 if sys.version_info[0] == 3:
     xrange = range
 del sys
@@ -52,11 +54,7 @@ class SixelConverter:
             self.DCS = '\x1bP'
             self.ST = '\x1b\\'
 
-        try:
-            from PIL import Image  # PIL
-        except ImportError:
-            import imageloader as Image
-
+        from PIL import Image  # PIL
         image = Image.open(file)
         image = image.convert("RGB").convert("P",
                                              palette=Image.ADAPTIVE,
@@ -283,11 +281,6 @@ class SixelConverter:
         output.write(self.ST)  # terminate Device Control String
 
     def getvalue(self):
-
-        try:
-            from cStringIO import StringIO
-        except ImportError:
-            from StringIO import StringIO
         output = StringIO()
 
         try:

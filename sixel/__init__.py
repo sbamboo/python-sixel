@@ -27,6 +27,7 @@ import sys
 import optparse
 import select
 import logging
+from io import StringIO
 
 from .cellsize import CellSizeDetector
 from .sixel import SixelWriter
@@ -51,13 +52,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 def _filenize(f):
     import stat
-
     mode = os.fstat(f.fileno()).st_mode
     if stat.S_ISFIFO(mode) or os.isatty(f.fileno()):
-        try:
-            from cStringIO import StringIO
-        except ImportError:
-            from StringIO import StringIO
         return StringIO(f.read())
     return f
 
@@ -232,6 +228,7 @@ def main():
                     fast=options.fast)
     except KeyboardInterrupt:
         pass
+
 
 if __name__ == '__main__':
     main()
