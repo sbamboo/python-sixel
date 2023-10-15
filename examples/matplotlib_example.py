@@ -1,27 +1,28 @@
-#!/usr/bin/env python2
-#vim:fileencoding=utf8
+#!/usr/bin/env python
+from io import BytesIO
 import matplotlib
-matplotlib.rcParams["backend"]="Agg"
-import pylab as pl
-import numpy as np
-from cStringIO import StringIO
+import matplotlib.pyplot as plt
+import numpy
 import sixel
 
-def sixelfig():
-    buf = StringIO()
-    pl.savefig(buf)
-    buf.seek(0)
+
+def sixel_fig():
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+
     writer = sixel.SixelWriter()
-    writer.draw(buf)
+    writer.draw(buffer)
+
 
 def main():
-    pl.figure(figsize=(4,3))
-    x = np.linspace(0,1,100)
+    matplotlib.rcParams["backend"] = "Agg"
+    plt.figure(figsize=(4, 3))
+    x = numpy.linspace(0, 1, 100)
     y = x**2
-    pl.plot(x,y)
-    sixelfig()
-    pass
+    plt.plot(x,y)
+    sixel_fig()
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     main()
 
