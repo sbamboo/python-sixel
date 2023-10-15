@@ -29,7 +29,7 @@ import select
 import logging
 from io import StringIO
 
-from .cellsize import CellSizeDetector
+from .cellsize import get_size
 from .sixel import SixelWriter
 
 license_text = """
@@ -170,7 +170,7 @@ def main():
     if (left, top, width, height) != (None, None, None, None):
         if os.isatty(stdout.fileno()) and os.isatty(stdin.fileno()):
             try:
-                char_width, char_height = CellSizeDetector().get_size()
+                char_width, char_height = get_size()
             except Exception:
                 char_width, char_height = (10, 20)
         else:

@@ -24,50 +24,51 @@ import termios
 import select
 
 
-class CellSizeDetector:
+def __set_raw():
+    fd = sys.stdin.fileno()
+    backup = termios.tcgetattr(fd)
+    try:
+        new = termios.tcgetattr(fd)
+        new[0] = 0  # c_iflag = 0
+        new[3] = 0  # c_lflag = 0
+        new[3] = new[3] & ~(termios.ECHO | termios.ICANON)
+        termios.tcsetattr(fd, termios.TCSANOW, new)
+    except Exception:
+        termios.tcsetattr(fd, termios.TCSANOW, backup)
+    return backup
 
-    def __set_raw(self):
-        fd = sys.stdin.fileno()
-        backup = termios.tcgetattr(fd)
-        try:
-            new = termios.tcgetattr(fd)
-            new[0] = 0  # c_iflag = 0
-            new[3] = 0  # c_lflag = 0
-            new[3] = new[3] & ~(termios.ECHO | termios.ICANON)
-            termios.tcsetattr(fd, termios.TCSANOW, new)
-        except Exception:
-            termios.tcsetattr(fd, termios.TCSANOW, backup)
-        return backup
 
-    def __reset_raw(self, old):
-        fd = sys.stdin.fileno()
-        termios.tcsetattr(fd, termios.TCSAFLUSH, old)
+def __reset_raw(old):
+    fd = sys.stdin.fileno()
+    termios.tcsetattr(fd, termios.TCSAFLUSH, old)
 
-    def __get_report(self, query):
-        result = ''
-        fd = sys.stdin.fileno()
-        rfds = [fd]
-        wfds = []
-        xfds = []
 
-        sys.stdout.write(query)
-        sys.stdout.flush()
+def __get_report(query):
+    result = ''
+    fd = sys.stdin.fileno()
+    rfds = [fd]
+    wfds = []
+    xfds = []
 
-        rfd, wfd, xfd = select.select(rfds, wfds, xfds, 0.5)
-        if rfd:
-            result = os.read(fd, 1024)
-            return result[:-1].split(';')[1:]
-        return None
+    sys.stdout.write(query)
+    sys.stdout.flush()
 
-    def get_size(self):
+    rfd, wfd, xfd = select.select(rfds, wfds, xfds, 0.5)
+    if rfd:
+        result = os.read(fd, 1024)
+        return result[:-1].split(';')[1:]
+    return None
 
-        backup_termios = self.__set_raw()
-        try:
-            height, width = self.__get_report("\x1b[14t")
-            row, column = self.__get_report("\x1b[18t")
 
-            char_width = int(width) / int(column)
-            char_height = int(height) / int(row)
-        finally:
-            self.__reset_raw(backup_termios)
-        return char_width, char_height
+def get_size():
+
+    backup_termios = __set_raw()
+    try:
+        height, width = __get_report("\x1b[14t")
+        row, column = __get_report("\x1b[18t")
+
+        char_width = int(width) / int(column)
+        char_height = int(height) / int(row)
+    finally:
+        __reset_raw(backup_termios)
+    return char_width, char_height
