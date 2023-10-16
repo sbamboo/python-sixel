@@ -1,4 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# Copyright 2012-2014 Hayaki Saito <user@zuse.jp>
+# Copyright 2023 Lubosz Sarnecki <lubosz@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 from io import BytesIO
 import matplotlib
 import matplotlib.pyplot as plt

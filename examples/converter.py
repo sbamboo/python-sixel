@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# Copyright 2023 Lubosz Sarnecki <lubosz@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 import logging
 import sys
 from pathlib import Path
