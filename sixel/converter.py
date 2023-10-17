@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from io import StringIO
+from PIL import Image
 
 
 class SixelConverter:
@@ -34,7 +35,6 @@ class SixelConverter:
             self.DCS = '\x1bP'
             self.ST = '\x1b\\'
 
-        from PIL import Image  # PIL
         image = Image.open(file)
         image = image.convert("RGB").convert("P",
                                              palette=Image.ADAPTIVE,
