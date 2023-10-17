@@ -37,7 +37,7 @@ class SixelConverter:
 
         image = Image.open(file)
         image = image.convert("RGB").convert("P",
-                                             palette=Image.ADAPTIVE,
+                                             palette=Image.Palette.ADAPTIVE,
                                              colors=ncolor)
         if w or h:
             width, height = image.size
