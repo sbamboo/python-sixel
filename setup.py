@@ -8,10 +8,9 @@ filename = inspect.getfile(inspect.currentframe())
 dirpath = os.path.abspath(os.path.dirname(inspect.getfile(inspect.currentframe())))
 long_description = open(os.path.join(dirpath, "README.md")).read()
 
-setup(name                  = 'PySixel',
+setup(name                  = 'sixel',
       version               = __version__,
-      description           = ('View full-pixel color graphics on SIXEL-supported terminals'
-                               '(xterm/mlterm/DECterm/Reflection/RLogin/tanasinn/yaft)'),
+      description           = ('View full-pixel color graphics on Sixel-supported terminals'),
       long_description      = long_description,
       py_modules            = ['sixel'],
       eager_resources       = [],
@@ -24,8 +23,8 @@ setup(name                  = 'PySixel',
                                ],
       keywords              = 'sixel terminal image',
       author                = __author__,
-      author_email          = 'user@zuse.jp',
-      url                   = 'https://github.com/saitoha/PySixel',
+      author_email          = 'lubosz@gmail.com',
+      url                   = 'https://github.com/lubosz/python-sixel',
       license               = __license__,
       packages              = find_packages(exclude=[]),
       zip_safe              = False,
