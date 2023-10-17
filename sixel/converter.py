@@ -3,12 +3,7 @@
 # Copyright 2023 Lubosz Sarnecki <lubosz@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import sys
 from io import StringIO
-
-if sys.version_info[0] == 3:
-    xrange = range
-del sys
 
 
 class SixelConverter:
@@ -79,7 +74,7 @@ class SixelConverter:
         palette = self.palette
 
         # write palette section
-        for i in xrange(0, self._ncolor * 3, 3):
+        for i in range(0, self._ncolor * 3, 3):
             no = i / 3
             r = palette[i + 0] * 100 / 256
             g = palette[i + 1] * 100 / 256
@@ -87,7 +82,7 @@ class SixelConverter:
             output.write('#%d;2;%d;%d;%d' % (no, r, g, b))
 
     def __write_body_without_alphathreshold(self, output, data, keycolor):
-        for n in xrange(0, self._ncolor):
+        for n in range(0, self._ncolor):
             palette = self.palette
             r = palette[n * 3 + 0] * 100 / 256
             g = palette[n * 3 + 1] * 100 / 256
@@ -95,7 +90,7 @@ class SixelConverter:
             output.write('#%d;2;%d;%d;%d\n' % (n, r, g, b))
         height = self.height
         width = self.width
-        for y in xrange(0, height, 6):
+        for y in range(0, height, 6):
             if height - y <= 5:
                 band = height - y
             else:
@@ -109,11 +104,11 @@ class SixelConverter:
                 count = 0
                 if s:
                     node.append((0, s))
-                for x in xrange(s, width):
+                for x in range(s, width):
                     count += 1
                     p = y * width + x
                     six = 0
-                    for i in xrange(0, band):
+                    for i in range(0, band):
                         d = data[p + width * i]
                         if d == n:
                             six |= 1 << i
@@ -144,12 +139,12 @@ class SixelConverter:
         height = self.height
         width = self.width
         n = 1
-        for y in xrange(0, height):
+        for y in range(0, height):
             p = y * width
             cached_no = data[p]
             count = 1
             c = -1
-            for x in xrange(0, width):
+            for x in range(0, width):
                 color_no = data[p + x]
                 if color_no == cached_no:  # and count < 255:
                     count += 1
@@ -201,13 +196,13 @@ class SixelConverter:
         width = self.width
         max_runlength = 255
         n = 1
-        for y in xrange(0, height):
+        for y in range(0, height):
             p = y * width
             cached_no = data[p]
             cached_alpha = rawdata[p][3]
             count = 1
             c = -1
-            for x in xrange(0, width):
+            for x in range(0, width):
                 color_no = data[p + x]
                 alpha = rawdata[p + x][3]
                 if color_no == cached_no:
