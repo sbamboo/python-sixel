@@ -6,7 +6,7 @@ import inspect, os
 
 filename = inspect.getfile(inspect.currentframe())
 dirpath = os.path.abspath(os.path.dirname(inspect.getfile(inspect.currentframe())))
-long_description = open(os.path.join(dirpath, "README.rst")).read()
+long_description = open(os.path.join(dirpath, "README.md")).read()
 
 setup(name                  = 'PySixel',
       version               = __version__,
