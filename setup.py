@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-from sixel import __version__, __license__, __author__
+from sixel import __version__
 import inspect, os
 
 filename = inspect.getfile(inspect.currentframe())
@@ -22,10 +22,10 @@ setup(name                  = 'sixel',
                                'Programming Language :: Python'
                                ],
       keywords              = 'sixel terminal image',
-      author                = __author__,
+      author                = "Lubosz Sarnecki",
       author_email          = 'lubosz@gmail.com',
       url                   = 'https://github.com/lubosz/python-sixel',
-      license               = __license__,
+      license               = "GPL v3",
       packages              = find_packages(exclude=[]),
       zip_safe              = False,
       include_package_data  = False,

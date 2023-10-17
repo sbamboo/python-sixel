@@ -3,9 +3,7 @@
 # Copyright 2023 Lubosz Sarnecki <lubosz@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-__author__ = "Lubosz Sarnecki"
 __version__ = "0.2.0"
-__license__ = "GPL v3"
 
 import os
 import sys
