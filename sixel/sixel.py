@@ -69,10 +69,10 @@ class SixelWriter:
         self.save_position(output)
 
         try:
-            if not x is None:
+            if x is not None:
                 self.move_x(x, absolute, output)
 
-            if not y is None:
+            if y is not None:
                 self.move_y(y, absolute, output)
 
             sixel_converter = SixelConverter(filename,

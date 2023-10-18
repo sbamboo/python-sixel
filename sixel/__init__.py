@@ -141,28 +141,28 @@ def main():
         else:
             char_width, char_height = (10, 20)
 
-        if not left is None:
+        if left is not None:
             pos = left.find("px")
             if pos > 0:
                 left = int(left[:pos]) / char_width
             else:
                 left = int(left)
 
-        if not top is None:
+        if top is not None:
             pos = top.find("px")
             if pos > 0:
                 top = int(top[:pos]) / char_width
             else:
                 top = int(top)
 
-        if not width is None:
+        if width is not None:
             pos = width.find("px")
             if pos > 0:
                 width = int(width[:pos])
             else:
                 width = int(width) * char_width
 
-        if not height is None:
+        if height is not None:
             pos = height.find("px")
             if pos > 0:
                 height = int(height[:pos])
