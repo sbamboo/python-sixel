@@ -11,26 +11,26 @@ from .converter import SixelConverter
 
 class SixelWriter:
 
-    def __init__(self, f8bit=False, bodyonly=False):
+    def __init__(self, f8bit=False, body_only=False):
         self.f8bit = f8bit
-        self._bodyonly = bodyonly
+        self._body_only = body_only
         if f8bit:  # 8bit mode
             self.CSI = '\x9b'
         else:
             self.CSI = '\x1b['
 
     def save_position(self, output):
-        if not self._bodyonly:
+        if not self._body_only:
             if os.isatty(output.fileno()):
                 output.write('\x1b7')  # DECSC
 
     def restore_position(self, output):
-        if not self._bodyonly:
+        if not self._body_only:
             if os.isatty(output.fileno()):
                 output.write('\x1b8')  # DECRC
 
     def move_x(self, n, fabsolute, output):
-        if not self._bodyonly:
+        if not self._body_only:
             output.write(self.CSI)
             if fabsolute:
                 output.write('%d`' % n)
@@ -40,7 +40,7 @@ class SixelWriter:
                 output.write('%dD' % -n)
 
     def move_y(self, n, fabsolute, output):
-        if not self._bodyonly:
+        if not self._body_only:
             output.write(self.CSI)
             if fabsolute:
                 output.write('%dd' % n)
@@ -58,7 +58,7 @@ class SixelWriter:
              w=None,
              h=None,
              ncolor=256,
-             alphathreshold=0,
+             alpha_threshold=0,
              chromakey=False,
              fast=True):
 
@@ -80,10 +80,10 @@ class SixelWriter:
                                              w,
                                              h,
                                              ncolor,
-                                             alphathreshold=alphathreshold,
+                                             alpha_threshold=alpha_threshold,
                                              chromakey=chromakey,
                                              fast=fast)
-            sixel_converter.write(output, bodyonly=self._bodyonly)
+            sixel_converter.write(output, body_only=self._body_only)
 
         finally:
             self.restore_position(output)

@@ -71,7 +71,7 @@ def main():
     parser.add_option("-t", "--alpha-threshold",
                       action="store",
                       type="int",
-                      dest="alphathreshold",
+                      dest="alpha_threshold",
                       default="0",
                       help="Alpha threthold for PNG-to-SIXEL image conversion")
 
@@ -90,7 +90,7 @@ def main():
 
     parser.add_option("-b", "--body-only",
                       action="store_true",
-                      dest="bodyonly",
+                      dest="body_only",
                       default=False,
                       help="Output sixel without header and DCS envelope")
 
@@ -170,7 +170,7 @@ def main():
                 height = int(height) * char_height
 
     writer = SixelWriter(f8bit=options.f8bit,
-                         bodyonly=options.bodyonly)
+                         body_only=options.body_only)
 
     try:
         if select.select([stdin, ], [], [], 0.0)[0]:
@@ -188,7 +188,7 @@ def main():
                     w=width,
                     h=height,
                     ncolor=int(options.ncolor),
-                    alphathreshold=options.alphathreshold,
+                    alpha_threshold=options.alpha_threshold,
                     chromakey=options.chromakey,
                     fast=options.fast)
     except KeyboardInterrupt:

@@ -14,11 +14,11 @@ class SixelConverter:
                  w=None,
                  h=None,
                  ncolor=256,
-                 alphathreshold=0,
+                 alpha_threshold=0,
                  chromakey=False,
                  fast=True):
 
-        self.__alphathreshold = alphathreshold
+        self.__alpha_threshold = alpha_threshold
         self.__chromakey = chromakey
         self._slots = [0] * 257
         self._fast = fast
@@ -51,7 +51,7 @@ class SixelConverter:
         self.data = image.getdata()
         self.width, self.height = image.size
 
-        if alphathreshold > 0:
+        if alpha_threshold > 0:
             self.rawdata = Image.open(file).convert("RGBA").getdata()
 
     def __write_header(self, output):
@@ -81,7 +81,7 @@ class SixelConverter:
             b = palette[i + 2] * 100 / 256
             output.write('#%d;2;%d;%d;%d' % (no, r, g, b))
 
-    def __write_body_without_alphathreshold(self, output, data):
+    def __write_body_without_alpha_threshold(self, output, data):
         for n in range(0, self._ncolor):
             palette = self.palette
             r = palette[n * 3 + 0] * 100 / 256
@@ -135,7 +135,7 @@ class SixelConverter:
                 output.write("$\n")
             output.write("-\n")
 
-    def __write_body_without_alphathreshold_fast(self, output, data, keycolor):
+    def __write_body_without_alpha_threshold_fast(self, output, data, key_color):
         height = self.height
         width = self.width
         n = 1
@@ -149,7 +149,7 @@ class SixelConverter:
                 if color_no == cached_no:  # and count < 255:
                     count += 1
                 else:
-                    if cached_no == keycolor:
+                    if cached_no == key_color:
                         c = 0x3f
                     else:
                         c = 0x3f + n
@@ -168,7 +168,7 @@ class SixelConverter:
                     count = 1
                     cached_no = color_no
             if c != -1 and count > 1:
-                if cached_no == keycolor:
+                if cached_no == key_color:
                     c = 0x3f
                 else:
                     if self._slots[cached_no] == 0:
@@ -190,11 +190,11 @@ class SixelConverter:
                 n <<= 1
                 output.write('$')  # write line terminator
 
-    def __write_body_with_alphathreshold(self, output, data, keycolor):
+    def __write_body_with_alpha_threshold(self, output, data, key_color):
         rawdata = self.rawdata
         height = self.height
         width = self.width
-        max_runlength = 255
+        max_run_length = 255
         n = 1
         for y in range(0, height):
             p = y * width
@@ -207,12 +207,12 @@ class SixelConverter:
                 alpha = rawdata[p + x][3]
                 if color_no == cached_no:
                     if alpha == cached_alpha:
-                        if count < max_runlength:
+                        if count < max_run_length:
                             count += 1
                             continue
-                if cached_no == keycolor:
+                if cached_no == key_color:
                     c = 0x3f
-                elif cached_alpha < self.__alphathreshold:
+                elif cached_alpha < self.__alpha_threshold:
                     c = 0x3f
                 else:
                     c = n + 0x3f
@@ -227,7 +227,7 @@ class SixelConverter:
                 cached_no = color_no
                 cached_alpha = alpha
             if c != -1:
-                if cached_no == keycolor:
+                if cached_no == key_color:
                     c = 0x3f
                 if count == 1:
                     output.write('#%d%c' % (cached_no, c))
@@ -245,16 +245,16 @@ class SixelConverter:
     def __write_body_section(self, output):
         data = self.data
         if self.__chromakey:
-            keycolor = data[0]
+            key_color = data[0]
         else:
-            keycolor = -1
-        if self.__alphathreshold == 0:
+            key_color = -1
+        if self.__alpha_threshold == 0:
             if self._fast:
-                self.__write_body_without_alphathreshold_fast(output, data, keycolor)
+                self.__write_body_without_alpha_threshold_fast(output, data, key_color)
             else:
-                self.__write_body_without_alphathreshold(output, data)
+                self.__write_body_without_alpha_threshold(output, data)
         else:
-            self.__write_body_with_alphathreshold(output, data, keycolor)
+            self.__write_body_with_alpha_threshold(output, data, key_color)
 
     def __write_terminator(self, output):
         # write ST
@@ -272,9 +272,9 @@ class SixelConverter:
 
         return value
 
-    def write(self, output, bodyonly=False):
-        if not bodyonly:
+    def write(self, output, body_only=False):
+        if not body_only:
             self.__write_header(output)
         self.__write_body_section(output)
-        if not bodyonly:
+        if not body_only:
             self.__write_terminator(output)
