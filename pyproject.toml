@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sixel"
-version = "0.2.0"
+dynamic = ["version"]
 authors = [
     { name = "Hayaki Saito", email = "user@zuse.jp" },
     { name = "Lubosz Sarnecki", email = "lubosz@gmail.com" }
@@ -34,3 +34,6 @@ dependencies = ["Pillow"]
 
 [project.scripts]
 sixelconv = "sixel:main"
+
+[tool.hatch.version]
+path = "sixel/__about__.py"

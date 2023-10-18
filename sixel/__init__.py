@@ -3,8 +3,6 @@
 # Copyright 2023 Lubosz Sarnecki <lubosz@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-__version__ = "0.2.0"
-
 import os
 import sys
 import optparse
@@ -14,6 +12,7 @@ from io import StringIO
 
 from .cellsize import get_size
 from .sixel import SixelWriter
+from .__about__ import __version__
 
 
 def _filenize(f):
