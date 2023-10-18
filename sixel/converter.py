@@ -81,7 +81,7 @@ class SixelConverter:
             b = palette[i + 2] * 100 / 256
             output.write('#%d;2;%d;%d;%d' % (no, r, g, b))
 
-    def __write_body_without_alphathreshold(self, output, data, keycolor):
+    def __write_body_without_alphathreshold(self, output, data):
         for n in range(0, self._ncolor):
             palette = self.palette
             r = palette[n * 3 + 0] * 100 / 256
@@ -98,30 +98,30 @@ class SixelConverter:
             buf = []
             set_ = set()
 
-            def add_node(n, s):
-                node = []
+            def add_node(n_, s):
+                nodes = []
                 cache = 0
-                count = 0
+                count_ = 0
                 if s:
-                    node.append((0, s))
+                    nodes.append((0, s))
                 for x in range(s, width):
-                    count += 1
+                    count_ += 1
                     p = y * width + x
-                    six = 0
+                    six_ = 0
                     for i in range(0, band):
                         d = data[p + width * i]
-                        if d == n:
-                            six |= 1 << i
-                        elif not d in set_:
+                        if d == n_:
+                            six_ |= 1 << i
+                        elif d not in set_:
                             set_.add(d)
                             add_node(d, x)
-                    if six != cache:
-                        node.append([cache, count])
-                        count = 0
-                        cache = six
+                    if six_ != cache:
+                        nodes.append([cache, count_])
+                        count_ = 0
+                        cache = six_
                 if cache != 0:
-                    node.append([cache, count])
-                buf.append((n, node))
+                    nodes.append([cache, count_])
+                buf.append((n_, nodes))
 
             add_node(data[y * width], 0)
 
@@ -252,7 +252,7 @@ class SixelConverter:
             if self._fast:
                 self.__write_body_without_alphathreshold_fast(output, data, keycolor)
             else:
-                self.__write_body_without_alphathreshold(output, data, keycolor)
+                self.__write_body_without_alphathreshold(output, data)
         else:
             self.__write_body_with_alphathreshold(output, data, keycolor)
 
