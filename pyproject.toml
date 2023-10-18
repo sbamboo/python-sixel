@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sixel"
+version = "0.2.0"
+authors = [
+    { name = "Hayaki Saito", email = "user@zuse.jp" },
+    { name = "Lubosz Sarnecki", email = "lubosz@gmail.com" }
+]
+maintainers = [
+    { name = "Lubosz Sarnecki", email = "lubosz@gmail.com" }
+]
+description = "Display images in the terminal"
+license = "GPL-3.0-or-later"
+readme = "README.md"
+requires-python = ">=3.0"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License (GPL)",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Topic :: Terminals",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+]
+keywords = ["sixel", "terminal", "image"]
+dependencies = ["Pillow"]
+
+[project.urls]
+"Homepage" = "https://github.com/lubosz/python-sixel"
+"Bug Tracker" = "https://github.com/lubosz/python-sixel/issues"
+
+[project.scripts]
+sixelconv = "sixel:main"
