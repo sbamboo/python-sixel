@@ -15,6 +15,7 @@ from io import StringIO
 from .cellsize import get_size
 from .sixel import SixelWriter
 
+
 def _filenize(f):
     import stat
     mode = os.fstat(f.fileno()).st_mode
@@ -24,7 +25,6 @@ def _filenize(f):
 
 
 def main():
-
     parser = optparse.OptionParser()
 
     parser.add_option("-8", "--8bit-mode",
@@ -73,7 +73,7 @@ def main():
                       type="int",
                       dest="alpha_threshold",
                       default="0",
-                      help="Alpha threthold for PNG-to-SIXEL image conversion")
+                      help="Alpha threshold for PNG-to-SIXEL image conversion")
 
     parser.add_option("-c", "--chromakey",
                       dest="chromakey",
@@ -174,13 +174,13 @@ def main():
 
     try:
         if select.select([stdin, ], [], [], 0.0)[0]:
-            imagefile = _filenize(stdin)
+            image_file = _filenize(stdin)
         elif len(args) == 0 or args[0] == '-':
-            imagefile = _filenize(stdin)
+            image_file = _filenize(stdin)
         else:
-            imagefile = args[0]
+            image_file = args[0]
 
-        writer.draw(imagefile,
+        writer.draw(image_file,
                     output=sys.stdout,
                     absolute=options.fabsolute,
                     x=left,
