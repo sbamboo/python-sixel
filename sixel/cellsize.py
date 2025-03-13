@@ -2,6 +2,8 @@
 # Copyright 2012-2014 Hayaki Saito <user@zuse.jp>
 # Copyright 2023 Lubosz Sarnecki <lubosz@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Windows fixed fork by Simon Kalmi Claesson @sbamboo
 
 import os
 import sys
