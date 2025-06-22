@@ -2,28 +2,13 @@
 
 Display images in the terminal using [Sixel](https://en.wikipedia.org/wiki/Sixel).
 
-This is a fork targeting windows, the version that was forked is itself a fork of the no longer maintained [PySixel](https://github.com/saitoha/PySixel).
+## This is a fork targeting windows, the version that was forked is itself a fork of the no longer maintained [PySixel](https://github.com/saitoha/PySixel).
 
 Check [arewesixelyet.com](https://www.arewesixelyet.com/) for supported terminals.
 
-## Installation
+### Original Project's README
 
-### PyPI release
-```
-pip install sixel
-```
-
-### git main branch
-```
-pip install git+https://github.com/lubosz/python-sixel.git
-```
-
-### Local copy
-```
-git clone https://github.com/lubosz/python-sixel.git
-cd python-sixel
-pip install -e .
-```
+[lubosz/python-sixel/README.md](https://github.com/lubosz/python-sixel/blob/main/README.md)
 
 ## Example
 
