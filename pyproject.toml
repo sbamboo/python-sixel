@@ -7,10 +7,11 @@ name = "sixel"
 dynamic = ["version"]
 authors = [
     { name = "Hayaki Saito", email = "user@zuse.jp" },
-    { name = "Lubosz Sarnecki", email = "lubosz@gmail.com" }
+    { name = "Lubosz Sarnecki", email = "lubosz@gmail.com" },
+    { name = "sbamboo" }
 ]
 maintainers = [
-    { name = "Lubosz Sarnecki", email = "lubosz@gmail.com" }
+    { name = "sbamboo" }
 ]
 description = "Display images in the terminal"
 license = "GPL-3.0-or-later"
@@ -29,8 +30,8 @@ keywords = ["sixel", "terminal", "image"]
 dependencies = ["Pillow"]
 
 [project.urls]
-"Homepage" = "https://github.com/lubosz/python-sixel"
-"Bug Tracker" = "https://github.com/lubosz/python-sixel/issues"
+"Homepage" = "https://github.com/sbamboo/python-sixel"
+"Bug Tracker" = "https://github.com/sbamboo/python-sixel/issues"
 
 [project.scripts]
 sixelconv = "sixel:main"
